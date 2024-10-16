@@ -1,9 +1,12 @@
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
 body {
 	height: 98vh;
 	background-color: #3b3b3b;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	font-family: 'SF Pro Display', sans-serif;
 }
 
 .container {
@@ -11,4 +14,48 @@ body {
 	height: 800px;
 	background-color: #000000;
 	border-radius: 30px;
+	display: flex;
+	flex-direction: column;
+}
+
+.result-window {
+	width: 100%;
+	height: 230px;
+}
+
+.wrapper-buttons {
+	width: 100%;
+	height: 496px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 14px;
+}
+
+.btn {
+	width: 88px;
+	height: 88px;
+	border-radius: 50%;
+	background-color: #333333;
+	border: none;
+	color: white;
+	line-height: 48px;
+	font-size: 34px;
+	font-weight: 500;
+}
+
+.zero {
+	width: 190px;
+	border-radius: 352px;
+	text-align: start;
+	padding-left: 35px;
+}
+
+.light-gray {
+	background-color: #a5a5a5;
+	color: #000;
+}
+
+.orange {
+	background-color: #f1a33b;
 }

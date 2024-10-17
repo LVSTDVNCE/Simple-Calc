@@ -1,31 +1,85 @@
-let result = document.querySelector('.result-window')
-result.innerHTML = '0'
+const resultWindow = document.querySelector('.result-window')
+const resultHistory = document.querySelector('.result-history')
+const clearButton = document.querySelector('.btn-clear')
+const clearHistoryBtn = document.querySelector('.clear-history')
+const equalsButton = document.querySelector('.btn-equally')
+const buttons = document.querySelectorAll('.btn')
 
-const clearBtn = document.querySelector('.btn-clear')
-let clearAll = () => {
-	result.innerHTML = '0'
+const operators = ['+', '-', '*', '/', '%']
+
+function appendToResult(value) {
+	const currentValue = resultWindow.value
+	if (operators.includes(value) && operators.includes(currentValue.slice(-1))) {
+		return
+	}
+	if (value === ',' && currentValue.endsWith(',')) {
+		return
+	}
+	resultWindow.value += value
 }
-clearBtn.addEventListener('click', clearAll)
-// const moduleBtn = document.querySelector('.btn-mod')
-// const percentBtn = document.querySelector('.btn-percent')
-// const divideBtn = document.querySelector('.btn-divide')
-// const multiplyBtn = document.querySelector('.btn-multiply')
-// const minusBtn = document.querySelector('.btn-multiply')
-// const plusBtn = document.querySelector('.btn-plus')
-// const pointBtn = document.querySelector('.btn-point')
-// const equallyBtn = document.querySelector('.btn-equally')
 
-// const oneBtn = document.querySelector('.btn-one')
-// const twoBtn = document.querySelector('.btn-two')
-// const threeBtn = document.querySelector('.btn-three')
-// const fourBtn = document.querySelector('.btn-four')
-// const fiveBtn = document.querySelector('.btn-five')
-// const sixBtn = document.querySelector('.btn-six')
-// const sevenBtn = document.querySelector('.btn-seven')
-// const eightBtn = document.querySelector('.btn-eight')
-// const nineBtn = document.querySelector('.btn-nine')
-// const nullBtn = document.querySelector('.btn-null')
+function clearResult() {
+	resultWindow.value = ''
+}
 
-let operators = ['/', 'X', '-', '+', '=']
+function clearHistory() {
+	resultHistory.innerHTML = ''
+}
 
-let btn = document.querySelectorAll('.btn')
+function calculate() {
+	const input = resultWindow.value.replace(',', '.')
+	try {
+		const result = eval(input)
+		addToHistory(`${input} = ${result}`)
+		resultWindow.value = result
+	} catch (error) {
+		alert('Ошибка в вычислении')
+	}
+}
+
+function calcPercent(value) {
+	return value / 100
+}
+
+function addToHistory(entry) {
+	const historyEntry = document.createElement('div')
+	historyEntry.style.padding = '20px'
+	historyEntry.textContent = entry
+	resultHistory.appendChild(historyEntry)
+}
+
+resultWindow.addEventListener('keydown', event => {
+	if (event.key === 'Enter') {
+		event.preventDefault()
+		calculate()
+	}
+})
+
+buttons.forEach(button => {
+	button.addEventListener('click', () => {
+		if (button.textContent === 'AC') {
+			clearResult()
+		} else if (button.textContent === '=') {
+			calculate()
+		} else if (button.textContent === '%') {
+			const input = resultWindow.value.replace(',', '.')
+			const result = calcPercent(eval(input))
+			if (isNaN(result)) {
+				resultWindow.value = ''
+			} else {
+				resultWindow.value = result
+				addToHistory(`${input} % = ${result}`)
+			}
+		} else if (button.textContent === '+/-') {
+			const input = resultWindow.value
+			if (input.trim() === '') {
+				return
+			}
+			resultWindow.value = -eval(input)
+		} else {
+			appendToResult(button.textContent)
+		}
+	})
+})
+
+clearHistoryBtn.addEventListener('click', clearHistory)

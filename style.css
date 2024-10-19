@@ -1,15 +1,18 @@
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 @import url('./reset.css');
+
 body {
-	height: 98vh;
 	background-color: #3b3b3b;
 	display: flex;
 	justify-content: center;
+	gap: 40px;
 	align-items: center;
+	flex-wrap: wrap;
 	font-family: 'SF Pro Display', sans-serif;
 }
 
 .container {
+	margin-top: 40px;
 	width: 428px;
 	height: 800px;
 	background-color: #000000;
@@ -106,13 +109,11 @@ body {
 	max-height: 800px;
 	color: white;
 	font-size: 20px;
-	position: absolute;
-	top: 40px;
-	right: 100px;
 	border-radius: 30px;
 	overflow-y: auto;
 	overflow-x: auto;
 	box-shadow: -4px 0px 15px 4px rgba(255, 255, 255, 0.13);
+	position: relative;
 }
 
 .result-history::-webkit-scrollbar {
